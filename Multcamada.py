@@ -18,11 +18,10 @@ entradas = np.array([[0,0],
                      [1,1]])
 
 saidas = np.array([[0],[1],[1],[0]])
-pesos0 = np.array([[-0.424, -0.740, -0.961],
-                   [0.358, -0.577, -0.469]])
-pesos1 = np.array([[-0.017], [-0.893], [0.148]])
-epocas = 100
-taxaAprendizagem = 0.3
+pesos0 = 2*np.random.random((2, 3)) - 1
+pesos1 = 2*np.random.random((3, 1)) - 1
+epocas = 100000
+taxaAprendizagem = 0.5
 momento = 1 
 
 for j in range(epocas):
@@ -35,13 +34,19 @@ for j in range(epocas):
     
     erros = saidas - camadaSaida
     mediaErros = np.mean(np.abs(erros))
+    print('Erro: ' + str(mediaErros))
     
     derivadaSaida = derivadaSig(camadaSaida)
     deltaSaida = erros * derivadaSaida
     
-    deltaSaidaXPeso = deltaSaida.dot(pesos1.T)
+    pesos1T = pesos1.T
+    deltaSaidaXPeso = deltaSaida.dot(pesos1T)
     deltaCamadaOculta = deltaSaidaXPeso * derivadaSig(camadaOculta)
     
-    novoPeso = camadaOculta.T.dot(deltaSaida)
-    pesos1 = (pesos1 * momento) + (novoPeso * taxaAprendizagem)
+    camadaOcultaT = camadaOculta.T
+    novoPeso1 = camadaOcultaT.dot(deltaSaida)
+    pesos1 = (pesos1 * momento) + (novoPeso1 * taxaAprendizagem)
     
+    camadaEntradaT = camadaEntrada.T
+    novoPeso0 = camadaEntradaT.dot(deltaCamadaOculta)
+    pesos0 = (pesos0 * momento) + (novoPeso0 * taxaAprendizagem)
