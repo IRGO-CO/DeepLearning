@@ -8,7 +8,7 @@ Created on Mon Nov 27 15:53:30 2023
 import pandas as pd
 import keras
 from keras.models import Sequential
-from keras.layers import Dense
+from keras.layers import Dense, Dropout
 from scikeras.wrappers import KerasClassifier
 from sklearn.model_selection import cross_val_score
 
@@ -20,7 +20,9 @@ def criarRede():
 
     classificador = Sequential()
     classificador.add(Dense(units=16, activation='relu', kernel_initializer='random_uniform', input_dim = 30))
+    classificador.add(Dropout(0.2))
     classificador.add(Dense(units=16, activation='relu', kernel_initializer='random_uniform'))
+    classificador.add(Dropout(0.2))
     classificador.add(Dense(units=1, activation='sigmoid'))
 
     classificador.compile(optimizer=otimizador, loss='binary_crossentropy', metrics=['binary_accuracy'])
