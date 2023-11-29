@@ -3,6 +3,10 @@
 Created on Mon Nov 27 15:53:30 2023
 
 @author: igorc
+
+Dados fornecidos por: UC Irvine Machine Learning Repository
+Autor: UCI
+Disponível em: https://archive.ics.uci.edu/dataset/14/breast+cancer
 """
 
 import pandas as pd
