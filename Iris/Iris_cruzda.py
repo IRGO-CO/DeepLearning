@@ -6,6 +6,7 @@ Created on Wed Nov 29 18:22:52 2023
 """
 
 import pandas as pd
+from tensorflow import keras
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.utils import np_utils
