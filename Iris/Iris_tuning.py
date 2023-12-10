@@ -21,19 +21,21 @@ lableencoder = LabelEncoder()
 classe = lableencoder.fit_transform(classe)
 classe_dummy = np_utils.to_categorical(classe)
 
-parametros = {'batch_size': [10, 50, 100], 
-              'epochs': [500, 1000, 5000] ,
-               'optimizer': ['adam', 'sgd', 'relu'],
-               'loos': ['categorical_crossentropy', 'hinge', 'categorical_hinge'],
-               'kernel_initializer': ['random_uniform', 'normal', 'constant'],
-               'activation': ['relu', 'tanh', 'elu'],
-               'neurons': [4, 8, 16]
+parametros = {'batch_size': [16, 32, 64],
+              'epochs': [100],
+              'optimizer': ['adam', 'sgd', 'rmsprop'],
+              'loos': ['categorical_crossentropy', 'sparse_categorical_crossentropy', 'mean_squared_error'],
+              'kernel_initializer': ['glorot_uniform', 'he_normal', 'lecun_normal'],
+              'activation': ['relu', 'tanh', 'sigmoid'],
+              'neurons': [32, 64, 128]
               }
 
 def criar_rede(optimizer, loos, kernel_initializer, activation, neurons):
     classificador = Sequential()
     classificador.add(Dense(units=neurons, activation=activation, input_dim=4 ))
+    classificador.add(Dropout(0.2))
     classificador.add(Dense(units=neurons, activation=activation))
+    classificador.add(Dropout(0.2))
     classificador.add(Dense(units=3, activation='softmax'))
     classificador.compile(optimizer=optimizer, loss=loos, metrics=['categorical_accuracy'])
     return classificador
