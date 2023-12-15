@@ -12,18 +12,42 @@ def extrair_dados(path):
 
 
 diretorio_raiz = 'Midi_train'
-caminho_compositor = []
 caminho_arquivo = []
 dados = []
+key = []
+time = []
+notas = []
 
 for compositor in os.listdir('Midi_train'):
     caminho = os.path.join(diretorio_raiz, compositor)
-    caminho_compositor.append(caminho)
     for arquivo in os.listdir(caminho):
         caminho_arquivo.append(os.path.join(caminho, arquivo))
+        
 
-    for i in caminho_arquivo:
-        dados.append(extrair_dados(i))
+    
+for i in caminho_arquivo:
+    dados.append(extrair_dados(i))
+    print('Extraido de : ', i)
 
+for i in range(0, 295):
+    key.append(dados[i][0])
+    time.append(dados[i][1])
+    notas.append(dados[i][2])
+    
+Frame = pd.DataFrame(
+    {
+        "Key_signature": key,
+        "Time_signature": time,
+        "Notas": notas,
+        
+    }
+)
 
-          
+print(key)
+
+Frame.to_csv('data_set.csv', index=False)
+
+Frame.head()
+
+base = pd.read_csv('data_set.csv')
+
