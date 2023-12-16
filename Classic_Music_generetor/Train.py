@@ -10,6 +10,7 @@ import pandas as pd
 import tensorflow as tf
 from tensorflow.keras.layers import Dense, LSTM
 from tensorflow.keras.models import Sequential
+from sklearn.preprocessing import MinMaxScaler
 
 
 base = pd.read_csv('data_set.csv')
